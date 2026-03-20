@@ -121,21 +121,23 @@ for _, row in filtered_df.iterrows():
     action_text += f"Estimated monthly savings: ${row['estimated_monthly_savings']}."
 
     # Display block (clean UI)
-   with st.container():
 
-    if row["priority"] == "high":
-        st.error(action_text)
-    elif row["priority"] == "medium":
-        st.warning(action_text)
-    else:
-        st.info(action_text)
+    # Display block (clean UI)
+    with st.container():
 
-    st.button(
-        f"Create Jira Ticket for {row['resource']}",
-        key=f"jira_{row['resource']}"
-    )
+        if row["priority"] == "high":
+            st.error(action_text)
+        elif row["priority"] == "medium":
+            st.warning(action_text)
+        else:
+            st.info(action_text)
 
-    st.divider()
+        st.button(
+            f"Create Jira Ticket for {row['resource']}",
+            key=f"jira_{row['resource']}"
+        )
+
+        st.divider()
 
 
 # Breakdown charts
