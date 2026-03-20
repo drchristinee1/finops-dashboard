@@ -89,17 +89,52 @@ st.divider()
 st.subheader("Recommended Actions")
 
 for _, row in filtered_df.iterrows():
-    if row["driver"] == "EC2":
-        action_text = f"**{row['driver']} / {row['resource']}** — Consider decommissioning or stopping the idle instance. Estimated monthly savings: **${row['estimated_monthly_savings']}**."
-    elif row["driver"] == "RDS":
-        action_text = f"**{row['driver']} / {row['resource']}** — Review database sizing and utilization. Estimated monthly savings: **${row['estimated_monthly_savings']}**."
-    elif row["driver"] == "S3":
-        action_text = f"**{row['driver']} / {row['resource']}** — Review lifecycle policy and remove unused storage. Estimated monthly savings: **${row['estimated_monthly_savings']}**."
-    else:
-        action_text = f"**{row['driver']} / {row['resource']}** — Review this item and assign remediation. Estimated monthly savings: **${row['estimated_monthly_savings']}**."
 
-    st.info(action_text)
-st.divider()
+    # Build base text with OWNER
+    action_text = (
+        f"**{row['driver']} / {row['resource']}** "
+        f"— Owner: {row['owner']} — "
+    )
+
+    # Driver-specific logic
+    if row["driver"] == "EC2":
+        action_text += (
+            f"Consider decommissioning or stopping the idle instance. "
+            f"Estimated monthly savings: ${row['estimated_monthly_savings']}."
+        )
+
+    elif row["driver"] == "RDS":
+        action_text += (
+            f"Review database sizing and utilization. "
+            f"Estimated monthly savings: ${row['estimated_monthly_savings']}."
+        )
+
+    elif row["driver"] == "S3":
+        action_text += (
+            f"Review lifecycle policy and remove unused storage. "
+            f"Estimated monthly savings: ${row['estimated_monthly_savings']}."
+        )
+
+    else:
+        action_text += (
+            f"Review this item and assign remediation. "
+            f"Estimated monthly savings: ${row['estimated_monthly_savings']}."
+        )
+
+    # 🔥 Priority coloring
+    if row["priority"] == "high":
+        st.error(action_text)
+    elif row["priority"] == "medium":
+        st.warning(action_text)
+    else:
+        st.info(action_text)
+
+    # 🚀 Jira button (placeholder)
+    if st.button(f"Create Jira Ticket for {row['resource']}", key=row["resource"]):
+        st.success("Jira ticket created (placeholder)")
+
+    st.divider()
+
 
 # Breakdown charts
 left2, right2 = st.columns(2)
