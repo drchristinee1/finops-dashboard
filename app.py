@@ -7,6 +7,7 @@ st.set_page_config(page_title="FinOps Operating Dashboard", layout="wide")
 st.title("📊 FinOps Operating Dashboard")
 st.caption("Action-oriented visibility into cost drivers, ownership, priority, and savings opportunities.")
 
+st.markdown("### From cost visibility → to engineering accountability")
 # Load data
 with open("data/action_plan.json") as f:
     data = json.load(f)
