@@ -5,7 +5,9 @@ Interactive FinOps dashboard that visualizes cost drivers, savings opportunities
 Initial FinOps dashboard that surfaces KPIs, cost drivers, and actionable savings opportunities to support decision-making.
 # FinOps Dashboard
 
-A simple dashboard that visualizes FinOps action items, cost drivers, and savings opportunities.
+A simple dashboard that visualizes FinOps action items, cost drivers, and savings opportunities.## Live App
+
+[View the FinOps Operating Dashboard](https://finops-operating-dashboard.streamlit.app)
 
 ## Features
 
