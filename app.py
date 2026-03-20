@@ -99,41 +99,35 @@ for _, row in filtered_df.iterrows():
     # Driver-specific logic
     if row["driver"] == "EC2":
         action_text += (
-            f"Consider decommissioning or stopping the idle instance. "
-            f"Estimated monthly savings: ${row['estimated_monthly_savings']}."
+            "Consider decommissioning or stopping the idle instance. "
         )
 
     elif row["driver"] == "RDS":
         action_text += (
-            f"Review database sizing and utilization. "
-            f"Estimated monthly savings: ${row['estimated_monthly_savings']}."
+            "Review database sizing and utilization. "
         )
 
     elif row["driver"] == "S3":
         action_text += (
-            f"Review lifecycle policy and remove unused storage. "
-            f"Estimated monthly savings: ${row['estimated_monthly_savings']}."
+            "Review lifecycle policy and remove unused storage. "
         )
 
     else:
         action_text += (
-            f"Review this item and assign remediation. "
-            f"Estimated monthly savings: ${row['estimated_monthly_savings']}."
+            "Review this item and assign remediation. "
         )
 
-    # 🔥 Priority coloring
-    if row["priority"] == "high":
-        st.error(action_text)
-    elif row["priority"] == "medium":
-        st.warning(action_text)
-    else:
-        st.info(action_text)
+    # Add savings
+    action_text += f"Estimated monthly savings: ${row['estimated_monthly_savings']}."
 
-    # 🚀 Jira button (placeholder)
-    if st.button(f"Create Jira Ticket for {row['resource']}", key=row["resource"]):
-        st.success("Jira ticket created (placeholder)")
-
-    st.divider()
+    # Display block (clean UI)
+    with st.container():
+        st.markdown(action_text)
+        st.button(
+            f"Create Jira Ticket for {row['resource']}",
+            key=f"jira_{row['resource']}"
+        )
+        st.divider()
 
 
 # Breakdown charts
