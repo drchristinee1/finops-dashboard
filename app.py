@@ -84,7 +84,21 @@ st.dataframe(
     use_container_width=True,
     hide_index=True,
 )
+st.divider()
 
+st.subheader("Recommended Actions")
+
+for _, row in filtered_df.iterrows():
+    if row["driver"] == "EC2":
+        action_text = f"**{row['driver']} / {row['resource']}** — Consider decommissioning or stopping the idle instance. Estimated monthly savings: **${row['estimated_monthly_savings']}**."
+    elif row["driver"] == "RDS":
+        action_text = f"**{row['driver']} / {row['resource']}** — Review database sizing and utilization. Estimated monthly savings: **${row['estimated_monthly_savings']}**."
+    elif row["driver"] == "S3":
+        action_text = f"**{row['driver']} / {row['resource']}** — Review lifecycle policy and remove unused storage. Estimated monthly savings: **${row['estimated_monthly_savings']}**."
+    else:
+        action_text = f"**{row['driver']} / {row['resource']}** — Review this item and assign remediation. Estimated monthly savings: **${row['estimated_monthly_savings']}**."
+
+    st.info(action_text)
 st.divider()
 
 # Breakdown charts
